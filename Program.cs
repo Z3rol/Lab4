@@ -20,7 +20,7 @@ namespace Lab4
 
             while (isRunning)
             {
-                Console.WriteLine("1. CalcExpr1");
+                Console.WriteLine("\n1. CalcExpr1");
                 Console.WriteLine("2. CalcExpr2");
                 Console.WriteLine("3. Plus");
                 Console.WriteLine("4. Minus");
@@ -29,37 +29,126 @@ namespace Lab4
                 Console.WriteLine("7. MyFracToString");
                 Console.WriteLine("8. ToStringWithIntPart");
                 Console.WriteLine("9. DoubleValue");
+                Console.WriteLine("10. Clear fractions");
+                Console.WriteLine("11. Clear the console");
                 Console.WriteLine("0. Close the program");
 
-                int choice = GetValidInt("Your choice", 0, 9);
+                int choice = GetValidInt("Your choice", 0, 11);
 
                 switch (choice)
                 {
                     case 1:
-                        Console.WriteLine(CalcExpr1(GetValidInt("Enter n", 1)));
+                        Console.WriteLine($"\n{CalcExpr1(GetValidInt("Enter n", 1))}");
                     break;
 
                     case 2:
-                        Console.WriteLine(CalcExpr2(GetValidInt("Enter n", 2)));
+                        Console.WriteLine($"{CalcExpr2(GetValidInt("Enter n", 2))}");
                     break;
 
                     case 3:
                         EnsureFractionIsEntered(ref f1, ref hasF1, "First frac");
                         EnsureFractionIsEntered(ref f2, ref hasF2, "Second frac");
+
+                        Console.WriteLine($"\nResult: {Plus(f1, f2)}");
                     break;
 
+                    case 4:
+                        EnsureFractionIsEntered(ref f1, ref hasF1, "First frac");
+                        EnsureFractionIsEntered(ref f2, ref hasF2, "Second frac");
 
+                        Console.WriteLine($"\nResult: {Minus(f1, f2)}");
+                    break;
+
+                    case 5:
+                        EnsureFractionIsEntered(ref f1, ref hasF1, "First frac");
+                        EnsureFractionIsEntered(ref f2, ref hasF2, "Second frac");
+
+                        Console.WriteLine($"\nResult: {Multiply(f1, f2)}");
+                    break;
+
+                    case 6:
+                        EnsureFractionIsEntered(ref f1, ref hasF1, "First frac");
+                        EnsureFractionIsEntered(ref f2, ref hasF2, "Second frac");
+
+                        Console.WriteLine($"\nResult: {Divide(f1, f2)}");
+                    break;
+
+                    case 7:
+                    {
+                        int fracChoice = GetValidInt("What fraction would u like to use", 1, 2);
+
+                        if (fracChoice == 1)
+                        {
+                            EnsureFractionIsEntered(ref f1, ref hasF1, "First frac");
+                            Console.WriteLine(MyFracToString(f1));
+                        }
+                        else
+                        {
+                            EnsureFractionIsEntered(ref f2, ref hasF2, "Second frac");
+                            Console.WriteLine(MyFracToString(f2));
+                        }
+                    }
+                    break;
+                    
+
+                    case 8:
+                    {
+                        int fracChoice = GetValidInt("What fraction would u like to use", 1, 2);
+
+                        if (fracChoice == 1)
+                        {
+                            EnsureFractionIsEntered(ref f1, ref hasF1, "First frac");
+                            Console.WriteLine(ToStringWithIntPart(f1));
+                        }
+                        else
+                        {
+                            EnsureFractionIsEntered(ref f2, ref hasF2, "Second frac");
+                            Console.WriteLine(ToStringWithIntPart(f2));
+                        }
+                    }
+                    break;
+
+                    case 9:
+                    {
+                        int fracChoice = GetValidInt("What fraction would u like to use", 1, 2);
+
+                        if (fracChoice == 1)
+                        {
+                            EnsureFractionIsEntered(ref f1, ref hasF1, "First frac");
+                            Console.WriteLine(DoubleValue(f1));
+                        }
+                        else
+                        {
+                            EnsureFractionIsEntered(ref f2, ref hasF2, "Second frac");
+                            Console.WriteLine(DoubleValue(f2));
+                        }
+                    }
+                    break;
+
+                    case 10:
+                        hasF1 = false;
+                        hasF2 = false;
+                        Console.WriteLine("Your fractions have been cleared.");
+                    break;
+
+                    case 11:
+                        Console.Clear();
+                    break;
 
                     case 0:
+                        Console.WriteLine("Closing...");
                         isRunning = false;
                     break;
                 }
+
+                WaitForKeyPress();
             }
         }
 
 
 
 
+        // Methods for Main
         static void EnsureFractionIsEntered(ref MyFrac f, ref bool hasF, string message)
         {
             if (hasF)
@@ -68,7 +157,15 @@ namespace Lab4
             }
 
             f = GetValidFrac(message);
+            hasF = true;
         }
+
+        static void WaitForKeyPress()
+        {
+            Console.WriteLine("Press any key to continue");
+            Console.ReadKey();
+        }
+
 
 
         // Input validation
@@ -84,7 +181,7 @@ namespace Lab4
                     (false, false) => $"{message} ({min}-{max}): "
                 };
 
-                Console.Write($"\n{prompt}");
+                Console.Write($"{prompt}");
 
                 if (!int.TryParse(Console.ReadLine(), out int num))
                 {
@@ -173,7 +270,7 @@ namespace Lab4
         // String formatting
         static string MyFracToString(MyFrac f)
         {
-            return new string($"{f.nom} / {f.denom}");
+            return $"{f.nom} / {f.denom}";
         }
 
         static string ToStringWithIntPart(MyFrac f)
