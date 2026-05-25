@@ -1,7 +1,5 @@
 ﻿using MyFrac = (long nom, long denom);
 
-
-
 namespace Lab4
 {
     class Program
@@ -10,6 +8,67 @@ namespace Lab4
         {
             Console.Clear();
 
+            bool isRunning = true;
+            while (isRunning)
+            {
+                PrintMainMenu();
+
+                int choice = Functions.GetValidInt("Choice", 0, 2);
+                switch (choice)
+                {
+                    case 1:
+                        ExecuteFractionsTask();
+                    break;
+                    
+                    case 2:
+                        ExecuteStudentsTask();
+                    break;
+
+                    case 0:
+                        Console.WriteLine("Closing...");
+                        isRunning = false;
+                    break;
+                }
+            }
+        }
+
+
+
+        // UI
+        static void PrintMainMenu()
+        {
+            Console.WriteLine(" 1. Fractions");
+            Console.WriteLine(" 2. Students");
+            Console.WriteLine(" 0. Close the app");
+        }
+
+        static void PrintFractionsMenu()
+        {
+            Console.WriteLine("\n1. CalcExpr1");
+            Console.WriteLine("2. CalcExpr2");
+            Console.WriteLine("3. Plus");
+            Console.WriteLine("4. Minus");
+            Console.WriteLine("5. Multiply");
+            Console.WriteLine("6. Divide");
+            Console.WriteLine("7. MyFracToString");
+            Console.WriteLine("8. ToStringWithIntPart");
+            Console.WriteLine("9. DoubleValue");
+            Console.WriteLine("10. Clear fractions");
+            Console.WriteLine("11. Clear the console");
+            Console.WriteLine("0. Return to the menu");
+        }
+
+        static void WaitForKeyPress(string message = "Press any key to continue")
+        {
+            Console.WriteLine(message);
+            Console.ReadKey();
+        }
+
+
+
+        // Fractions
+        static void ExecuteFractionsTask()
+        {
             MyFrac f1 = new();
             MyFrac f2 = new();
 
@@ -20,72 +79,60 @@ namespace Lab4
 
             while (isRunning)
             {
-                Console.WriteLine("\n1. CalcExpr1");
-                Console.WriteLine("2. CalcExpr2");
-                Console.WriteLine("3. Plus");
-                Console.WriteLine("4. Minus");
-                Console.WriteLine("5. Multiply");
-                Console.WriteLine("6. Divide");
-                Console.WriteLine("7. MyFracToString");
-                Console.WriteLine("8. ToStringWithIntPart");
-                Console.WriteLine("9. DoubleValue");
-                Console.WriteLine("10. Clear fractions");
-                Console.WriteLine("11. Clear the console");
-                Console.WriteLine("0. Close the program");
+                PrintFractionsMenu();
 
-                int choice = GetValidInt("Your choice", 0, 11);
-
+                int choice = Functions.GetValidInt("Your choice", 0, 11);
                 switch (choice)
                 {
                     case 1:
-                        Console.WriteLine($"\n{CalcExpr1(GetValidInt("Enter n", 1))}");
+                        Console.WriteLine($"\n{Fractions.CalcExpr1(Functions.GetValidInt("Enter n", 1))}");
                     break;
 
                     case 2:
-                        Console.WriteLine($"{CalcExpr2(GetValidInt("Enter n", 2))}");
+                        Console.WriteLine($"{Fractions.CalcExpr2(Functions.GetValidInt("Enter n", 2))}");
                     break;
 
                     case 3:
                         EnsureFractionIsEntered(ref f1, ref hasF1, "First frac");
                         EnsureFractionIsEntered(ref f2, ref hasF2, "Second frac");
 
-                        Console.WriteLine($"\nResult: {Plus(f1, f2)}");
+                        Console.WriteLine($"\nResult: {Fractions.Plus(f1, f2)}");
                     break;
 
                     case 4:
                         EnsureFractionIsEntered(ref f1, ref hasF1, "First frac");
                         EnsureFractionIsEntered(ref f2, ref hasF2, "Second frac");
 
-                        Console.WriteLine($"\nResult: {Minus(f1, f2)}");
+                        Console.WriteLine($"\nResult: {Fractions.Minus(f1, f2)}");
                     break;
 
                     case 5:
                         EnsureFractionIsEntered(ref f1, ref hasF1, "First frac");
                         EnsureFractionIsEntered(ref f2, ref hasF2, "Second frac");
 
-                        Console.WriteLine($"\nResult: {Multiply(f1, f2)}");
+                        Console.WriteLine($"\nResult: {Fractions.Multiply(f1, f2)}");
                     break;
 
                     case 6:
                         EnsureFractionIsEntered(ref f1, ref hasF1, "First frac");
                         EnsureFractionIsEntered(ref f2, ref hasF2, "Second frac");
 
-                        Console.WriteLine($"\nResult: {Divide(f1, f2)}");
+                        Console.WriteLine($"\nResult: {Fractions.Divide(f1, f2)}");
                     break;
 
                     case 7:
                     {
-                        int fracChoice = GetValidInt("What fraction would u like to use", 1, 2);
+                        int fracChoice = Functions.GetValidInt("What fraction would u like to use", 1, 2);
 
                         if (fracChoice == 1)
                         {
                             EnsureFractionIsEntered(ref f1, ref hasF1, "First frac");
-                            Console.WriteLine(MyFracToString(f1));
+                            Console.WriteLine(Fractions.MyFracToString(f1));
                         }
                         else
                         {
                             EnsureFractionIsEntered(ref f2, ref hasF2, "Second frac");
-                            Console.WriteLine(MyFracToString(f2));
+                            Console.WriteLine(Fractions.MyFracToString(f2));
                         }
                     }
                     break;
@@ -93,34 +140,34 @@ namespace Lab4
 
                     case 8:
                     {
-                        int fracChoice = GetValidInt("What fraction would u like to use", 1, 2);
+                        int fracChoice = Functions.GetValidInt("What fraction would u like to use", 1, 2);
 
                         if (fracChoice == 1)
                         {
                             EnsureFractionIsEntered(ref f1, ref hasF1, "First frac");
-                            Console.WriteLine(ToStringWithIntPart(f1));
+                            Console.WriteLine(Fractions.ToStringWithIntPart(f1));
                         }
                         else
                         {
                             EnsureFractionIsEntered(ref f2, ref hasF2, "Second frac");
-                            Console.WriteLine(ToStringWithIntPart(f2));
+                            Console.WriteLine(Fractions.ToStringWithIntPart(f2));
                         }
                     }
                     break;
 
                     case 9:
                     {
-                        int fracChoice = GetValidInt("What fraction would u like to use", 1, 2);
+                        int fracChoice = Functions.GetValidInt("What fraction would u like to use", 1, 2);
 
                         if (fracChoice == 1)
                         {
                             EnsureFractionIsEntered(ref f1, ref hasF1, "First frac");
-                            Console.WriteLine(DoubleValue(f1));
+                            Console.WriteLine(Fractions.DoubleValue(f1));
                         }
                         else
                         {
                             EnsureFractionIsEntered(ref f2, ref hasF2, "Second frac");
-                            Console.WriteLine(DoubleValue(f2));
+                            Console.WriteLine(Fractions.DoubleValue(f2));
                         }
                     }
                     break;
@@ -136,7 +183,6 @@ namespace Lab4
                     break;
 
                     case 0:
-                        Console.WriteLine("Closing...");
                         isRunning = false;
                     break;
                 }
@@ -145,10 +191,6 @@ namespace Lab4
             }
         }
 
-
-
-
-        // Methods for Main
         static void EnsureFractionIsEntered(ref MyFrac f, ref bool hasF, string message)
         {
             if (hasF)
@@ -160,190 +202,68 @@ namespace Lab4
             hasF = true;
         }
 
-        static void WaitForKeyPress()
-        {
-            Console.WriteLine("Press any key to continue");
-            Console.ReadKey();
-        }
-
-
-
-        // Input validation
-        static int GetValidInt(string message, int min = int.MinValue, int max = int.MaxValue, params int[] bannedNumbers)
-        {
-            while (true)
-            {
-                string prompt = (min == int.MinValue, max == int.MaxValue) switch
-                {
-                    (true, true)   => $"{message}: ",
-                    (true, false)  => $"{message} (up to {max}): ",
-                    (false, true)  => $"{message} ({min}+): ",
-                    (false, false) => $"{message} ({min}-{max}): "
-                };
-
-                Console.Write($"{prompt}");
-
-                if (!int.TryParse(Console.ReadLine(), out int num))
-                {
-                    Console.WriteLine("Invalid input. Please enter a valid number");
-                    continue;
-                }
-
-                if (num < min || num > max)
-                {
-                    Console.WriteLine($"Invalid input. Please enter a number in range ({min}-{max})");
-                    continue;
-                }
-
-                if (bannedNumbers.Contains(num))
-                {
-                    Console.WriteLine($"Number {num} is not allowed for current task. Pleaase enter another number");
-                    continue;
-                }
-
-                return num;
-            }
-        }
-
         static MyFrac GetValidFrac(string message)
         {
             Console.WriteLine($"\n{message}");
             
-            int nom = GetValidInt("Enter nom");
-            int denom = GetValidInt("Enter denom", bannedNumbers: 0);
+            int nom = Functions.GetValidInt("Enter nom");
+            int denom = Functions.GetValidInt("Enter denom", bannedNumbers: 0);
 
             return (nom, denom);
         }
 
 
 
-        // Main tasks
-        static MyFrac CalcExpr1(int n)
+        // Students
+        static void ExecuteStudentsTask()
         {
-            MyFrac sum = (0, 1);
+            List<Student> students = StudentDatabase.ReadStudentsFromFile("input.txt");
 
-            for (int i = 1; i <= n; i++)
+            if (students.Count == 0)
             {
-                sum = Plus(sum, (1, (long) i * (i + 1)));
+                Console.WriteLine("This file has no students data");
+                return;
+            }
+            
+            PrintStudents(students);
+            WaitForKeyPress("Press enter to sort");
+
+            List<Student> filteredStudents = StudentDatabase.FilterStudents(students);
+
+            if (filteredStudents.Count == 0)
+            {
+                Console.WriteLine("There are no students that are younger than 18 and have atleast one exam unpassed");
+                return;
             }
 
-            return sum;
+            PrintStudents(filteredStudents);
+
         }
 
-        static MyFrac CalcExpr2(int n)
+        public static void PrintStudents(List<Student> students)
         {
-            MyFrac sum = (1, 1);
+            if (students.Count == 0) return;
 
-            for (int i = 2; i <= n; i++)
+            string divider = new string('-', 109);
+
+            Console.WriteLine("\n--- STUDENTS ---");
+            Console.WriteLine(divider);
+            
+            Console.WriteLine($"| {"Last Name",-15} | {"First Name",-15} | {"Middle Name",-15} | {"Sex",-3} | {"Birth Date",-10} | {"Math",-4} | {"Phys",-4} | {"IT",-4} | {"Scholarship",11} |");
+            
+            Console.WriteLine(divider);
+
+            foreach (var student in students)
             {
-                sum = Multiply(Minus((1, 1), (1, i * i)), sum);
+                string mathStr = student.MathGrade == -1 ? "-" : student.MathGrade.ToString();
+                string physStr = student.PhysicsGrade == -1 ? "-" : student.PhysicsGrade.ToString();
+                string itStr = student.ItGrade == -1 ? "-" : student.ItGrade.ToString();
+
+                Console.WriteLine($"| {student.LastName,-15} | {student.Name,-15} | {student.MiddleName,-15} | {student.Sex,-3} | {student.BirthDate,-10:dd.MM.yyyy} | {mathStr,-4} | {physStr,-4} | {itStr,-4} | {student.Scholarship,11} |");
             }
 
-            return sum;
-        }
-
-
-
-        // Arithmetic operations
-        static MyFrac Plus(MyFrac f1, MyFrac f2)
-        {
-            return Normalize((f1.nom * f2.denom + f1.denom * f2.nom, f1.denom * f2.denom));
-        }
-
-        static MyFrac Minus(MyFrac f1, MyFrac f2)
-        {
-            return Normalize((f1.nom * f2.denom - f1.denom * f2.nom, f1.denom * f2.denom));
-        }
-
-        static MyFrac Multiply(MyFrac f1, MyFrac f2)
-        {
-            return Normalize((f1.nom * f2.nom, f1.denom * f2.denom));
-        }
-
-        static MyFrac Divide(MyFrac f1, MyFrac f2)
-        {
-            return Normalize((f1.nom * f2.denom, f1.denom * f2.nom));
-        }
-
-
-
-        // String formatting
-        static string MyFracToString(MyFrac f)
-        {
-            return $"{f.nom} / {f.denom}";
-        }
-
-        static string ToStringWithIntPart(MyFrac f)
-        {
-            f = Normalize(f);
-
-            string sign = "";
-
-            if (f.nom < 0)
-            {
-                sign = "-";
-                f.nom = Math.Abs(f.nom);
-            }
-
-            (long num, long rem) = Math.DivRem(f.nom, f.denom);
-
-            if (num == 0)
-            {
-                return $"{sign}{rem}/{f.denom}";
-            }
-            else if (rem == 0)
-            {
-                return $"{sign}{num}";
-            }
-            else
-                return $"{sign}({num} + {rem}/{f.denom})";
-        }
-
-        static double DoubleValue(MyFrac f)
-        {
-            return (double) f.nom / f.denom;
-        }
-
-        
-
-        // Core methods
-        static MyFrac Normalize(MyFrac t)
-        {
-            if (t.denom == 0)
-            {
-                throw new DivideByZeroException("Cannot divide by zero");
-            }
-            // Find greatest common divisor
-            long divisor = EuclidMethod(t.nom, t.denom);
-
-            // Simplify fraction
-            t.nom /= divisor;
-            t.denom /= divisor;
-
-            // Handle negative denom
-            if (t.denom < 0)
-            {
-                t.nom *= -1;
-                t.denom *= -1;
-            }
-
-            return t;
-        }
-
-        // Find greatest common divisor
-        static long EuclidMethod(long nom, long denom)
-        {
-            nom = Math.Abs(nom);
-            denom = Math.Abs(denom);
-
-            while (denom > 0)
-            {
-                long temp = denom;
-                denom = nom % denom;
-                nom = temp;
-            }
-
-            return nom;
+            Console.WriteLine(divider);
+            Console.WriteLine($"Total Students: {students.Count}\n");
         }
     }
 }
